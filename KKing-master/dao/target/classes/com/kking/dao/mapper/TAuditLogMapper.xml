@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kking.dao.mapper.TAuditLogMapper">
+    <resultMap id="SimpleResult" type="TAuditLog">
+        <id property="iD" column="ID"/>
+        <result property="iD" column="ID"/>
+        <result property="userId" column="user_id"/>
+        <result property="userAcct" column="user_acct"/>
+        <result property="userName" column="user_name"/>
+        <result property="operatingType" column="operating_type"/>
+        <result property="business" column="business"/>
+        <result property="createTime" column="create_time"/>
+        <result property="requestParam" column="request_param"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+    <sql id="SelectOneSql" >
+        select <trim suffixOverrides=","> ID,  user_id,  user_acct,  user_name,  operating_type,  business,  create_time,  request_param,  remark, </trim>
+        from t_audit_log
+    </sql>
+    <select id="selectById" resultType="TAuditLog" parameterType="Integer">
+        <include refid="SelectOneSql"/>
+        where ID=#{iD}
+    </select>
+    <select id="selectList" resultType="TAuditLog" parameterType="TAuditLog">
+        <include refid="SelectOneSql"/>
+        <where>
+            <if test="iD != null "> and `ID`=#{iD}</if>
+            <if test="userId != null "> and `user_id`=#{userId}</if>
+            <if test="userAcct != null  and userAcct != ''"> and `user_acct`=#{userAcct}</if>
+            <if test="userName != null  and userName != ''"> and `user_name`=#{userName}</if>
+            <if test="operatingType != null "> and `operating_type`=#{operatingType}</if>
+            <if test="business != null "> and `business`=#{business}</if>
+            <if test="createTime != null "> and `create_time`=#{createTime}</if>
+            <if test="requestParam != null  and requestParam != ''"> and `request_param`=#{requestParam}</if>
+            <if test="remark != null  and remark != ''"> and `remark`=#{remark}</if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="TAuditLog" keyProperty="ID" useGeneratedKeys="true">
+        insert into t_audit_log(
+        <trim suffixOverrides=",">
+            <if test="userId != null ">`user_id`,</if>
+            <if test="userAcct != null  and userAcct != ''">`user_acct`,</if>
+            <if test="userName != null  and userName != ''">`user_name`,</if>
+            <if test="operatingType != null ">`operating_type`,</if>
+            <if test="business != null ">`business`,</if>
+            <if test="createTime != null ">`create_time`,</if>
+            <if test="requestParam != null  and requestParam != ''">`request_param`,</if>
+            <if test="remark != null  and remark != ''">`remark`,</if>
+        </trim>
+        )values(
+        <trim suffixOverrides=",">
+            <if test="userId != null ">#{userId},</if>
+            <if test="userAcct != null  and userAcct != ''">#{userAcct},</if>
+            <if test="userName != null  and userName != ''">#{userName},</if>
+            <if test="operatingType != null ">#{operatingType},</if>
+            <if test="business != null ">#{business},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="requestParam != null  and requestParam != ''">#{requestParam},</if>
+            <if test="remark != null  and remark != ''">#{remark},</if>
+        </trim>
+        )
+    </insert>
+    <select id="selectOneByProperty" resultType="TAuditLog">
+        <include refid="SelectOneSql"/>
+        where ${param1} = #{param2}
+    </select>
+    <select id="selectListByProperty" resultType="TAuditLog">
+        <include refid="SelectOneSql"/>
+        where ${param1} = #{param2}
+    </select>
+    <delete id="deleteById" parameterType="TAuditLog">
+        delete from t_audit_log where ID=#{iD}
+    </delete>
+    <update id="update" parameterType="TAuditLog">
+        update t_audit_log set
+        <trim suffixOverrides=",">
+            <if test="userId != null ">`user_id`=#{userId},</if>
+            <if test="userAcct != null  and userAcct != ''">`user_acct`=#{userAcct},</if>
+            <if test="userName != null  and userName != ''">`user_name`=#{userName},</if>
+            <if test="operatingType != null ">`operating_type`=#{operatingType},</if>
+            <if test="business != null ">`business`=#{business},</if>
+            <if test="createTime != null ">`create_time`=#{createTime},</if>
+            <if test="requestParam != null  and requestParam != ''">`request_param`=#{requestParam},</if>
+            <if test="remark != null  and remark != ''">`remark`=#{remark},</if>
+        </trim>
+        where ID=#{iD}
+    </update>
+
+</mapper>

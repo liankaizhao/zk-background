@@ -1,0 +1,14 @@
+package ${packageName}.${moduleName};
+
+import ${packageName}.entity.${table.xCamelName};
+import java.util.List;
+
+public interface ${table.xCamelName}Mapper {
+     ${table.xCamelName} selectById(Integer id);
+     List<${table.xCamelName}> selectList(${table.xCamelName} ${table.camelName});
+     ${table.xCamelName} selectOneByProperty(String key, Object value);
+     List<${table.xCamelName}> selectListByProperty(String key, Object value);
+     int insert(${table.xCamelName} ${table.camelName});
+     int deleteById(${table.xCamelName} ${table.camelName});
+     int update(${table.xCamelName} ${table.camelName});
+}

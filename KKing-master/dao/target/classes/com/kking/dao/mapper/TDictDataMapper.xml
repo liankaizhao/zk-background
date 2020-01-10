@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kking.dao.mapper.TDictDataMapper">
+    <resultMap id="SimpleResult" type="TDictData">
+        <id property="id" column="id"/>
+        <result property="id" column="id"/>
+        <result property="typeId" column="type_id"/>
+        <result property="dictValue" column="dict_value"/>
+        <result property="dictName" column="dict_name"/>
+        <result property="deleteFlag" column="delete_flag"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <sql id="SelectOneSql" >
+        select <trim suffixOverrides=","> id,  type_id,  dict_value,  dict_name,  delete_flag,  create_time,  update_time, </trim>
+        from t_dict_data
+    </sql>
+    <select id="selectById" resultType="TDictData" parameterType="Integer">
+        <include refid="SelectOneSql"/>
+        where id=#{id}
+    </select>
+    <select id="selectList" resultType="TDictData" parameterType="TDictData">
+        <include refid="SelectOneSql"/>
+        <where>
+            <if test="id != null "> and `id`=#{id}</if>
+            <if test="typeId != null "> and `type_id`=#{typeId}</if>
+            <if test="dictValue != null "> and `dict_value`=#{dictValue}</if>
+            <if test="dictName != null  and dictName != ''"> and `dict_name`=#{dictName}</if>
+            <if test="deleteFlag != null "> and `delete_flag`=#{deleteFlag}</if>
+            <if test="createTime != null "> and `create_time`=#{createTime}</if>
+            <if test="updateTime != null "> and `update_time`=#{updateTime}</if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="TDictData" keyProperty="id" useGeneratedKeys="true">
+        insert into t_dict_data(
+        <trim suffixOverrides=",">
+            <if test="typeId != null ">`type_id`,</if>
+            <if test="dictValue != null ">`dict_value`,</if>
+            <if test="dictName != null  and dictName != ''">`dict_name`,</if>
+            <if test="deleteFlag != null ">`delete_flag`,</if>
+            <if test="createTime != null ">`create_time`,</if>
+            <if test="updateTime != null ">`update_time`,</if>
+        </trim>
+        )values(
+        <trim suffixOverrides=",">
+            <if test="typeId != null ">#{typeId},</if>
+            <if test="dictValue != null ">#{dictValue},</if>
+            <if test="dictName != null  and dictName != ''">#{dictName},</if>
+            <if test="deleteFlag != null ">#{deleteFlag},</if>
+            <if test="createTime != null ">#{createTime},</if>
+            <if test="updateTime != null ">#{updateTime},</if>
+        </trim>
+        )
+    </insert>
+    <select id="selectOneByProperty" resultType="TDictData">
+        <include refid="SelectOneSql"/>
+        where ${param1} = #{param2}
+    </select>
+    <select id="selectListByProperty" resultType="TDictData">
+        <include refid="SelectOneSql"/>
+        where ${param1} = #{param2}
+    </select>
+    <delete id="deleteById" parameterType="TDictData">
+        delete from t_dict_data where id=#{id}
+    </delete>
+    <update id="update" parameterType="TDictData">
+        update t_dict_data set
+        <trim suffixOverrides=",">
+            <if test="typeId != null ">`type_id`=#{typeId},</if>
+            <if test="dictValue != null ">`dict_value`=#{dictValue},</if>
+            <if test="dictName != null  and dictName != ''">`dict_name`=#{dictName},</if>
+            <if test="deleteFlag != null ">`delete_flag`=#{deleteFlag},</if>
+            <if test="createTime != null ">`create_time`=#{createTime},</if>
+            <if test="updateTime != null ">`update_time`=#{updateTime},</if>
+        </trim>
+        where id=#{id}
+    </update>
+
+</mapper>
