@@ -20,7 +20,4 @@ public class UserRegister {
     @ApiModelProperty("电话号码")
     private String mobile;
 
-    @ApiModelProperty("地址")
-    private String address;
-
 }
