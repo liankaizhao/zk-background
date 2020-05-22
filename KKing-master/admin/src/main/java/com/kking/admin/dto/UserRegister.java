@@ -23,4 +23,7 @@ public class UserRegister {
     @ApiModelProperty("地址")
     private String address;
 
+    @ApiModelProperty("卡折标志")
+    private String card;
+
 }
